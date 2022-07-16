@@ -122,7 +122,7 @@ const ProductsList = () => {
                                 </Card.Footer>
                              </Card>
                     </Col>
-                })}
+                })} 
             </Row>
           </Card>
           </Col>

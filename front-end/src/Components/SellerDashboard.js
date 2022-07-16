@@ -12,8 +12,43 @@ import AddProduct from "./AddProdcut";
 import UpdateProducts from "./UpdateProduct";
 import RemoveProducts from "./RemoveProducts";
 import BuyersRequests from "./BuyersRequests";
+import BuyersRequest from "./BuyersRequest";
 const SellerDashboard = () => {
+  const [modalShow, setModalShow] =useState(false);
   const [currentOpenScreen,setCurrentOpenScreen]=useState(<ViewAllProducts/>);
+  const [listOfBuyersRequest,setListOfBuyersRequest]=useState([
+    {
+      buyerName:"Zeeshan",
+      buyerId:"nvckv",
+      buyingRequestTime:"12-12-12"
+    },
+    {
+      buyerName:"Zeeshan",
+      buyerId:"nvckv",
+      buyingRequestTime:"12-12-12"
+    },
+    {
+      buyerName:"Zeeshan",
+      buyerId:"nvckv",
+      buyingRequestTime:"12-12-12"
+    },
+    {
+      buyerName:"Zeeshan",
+      buyerId:"nvckv",
+      buyingRequestTime:"12-12-12"
+    },
+    {
+      buyerName:"Zeeshan",
+      buyerId:"nvckv",
+      buyingRequestTime:"12-12-12"
+    },
+    {
+      buyerName:"Zeeshan",
+      buyerId:"nvckv",
+      buyingRequestTime:"12-12-12"
+    },
+    
+  ])
   const handleScreenChange=(index)=>{
     switch(index){
         case 0:
@@ -35,6 +70,7 @@ const SellerDashboard = () => {
         
     }
   }
+  
   return (
     <div>
       <Container>
@@ -69,7 +105,7 @@ const SellerDashboard = () => {
                 <Card.Header>
                   {" "}
                   <Button variant="light" style={{cursor:"pointer"}} onClick={()=>{
-                    handleScreenChange(4);
+                    setModalShow(true);
                   }}>
                     Purchase Requests
                   </Button>{" "}
@@ -85,6 +121,12 @@ const SellerDashboard = () => {
             </Col>
           </Row>
         </div>
+        <BuyersRequest
+        show={modalShow}
+        onHide={() => {
+          setModalShow(false)}}
+        listOfItems={listOfBuyersRequest}
+      />
       </Container>
     </div>
   );

@@ -4,8 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
-
-const Cart=(props)=>{
+const BuyersRequest=(props)=>{
     return (
         <Modal
           {...props}
@@ -15,7 +14,7 @@ const Cart=(props)=>{
         >
           <Modal.Header closeButton >
             <Modal.Title id="contained-modal-title-vcenter" className="text-center">
-              Cart  ({props.listOfItems.length})
+              Buyers Requests  ({props.listOfItems.length})
             </Modal.Title>
           </Modal.Header>
           <Modal.Body >
@@ -25,9 +24,9 @@ const Cart=(props)=>{
                 props.listOfItems.map((item)=>{
                     return  <ListGroup.Item>
                     <Row>
-                        <Col>Item :{item.itemName}</Col>
-                        <Col>Price : {item.itemPrice}</Col>
-                        <Col>Seller : {item.itemSellerName}</Col>
+                        <Col>Name : {item.buyerName}</Col>
+                        <Col>Request Time : {item.buyingRequestTime}</Col>
+                      
                     </Row>
                   </ListGroup.Item>
                 })
@@ -35,14 +34,14 @@ const Cart=(props)=>{
           </ListGroup>
           </Modal.Body>
           <Modal.Footer>
-          <Button variant="danger" onClick={props.onHide}>Discard</Button>
+          <Button variant="danger" onClick={props.onHide}>Close</Button>
             <Button onClick={()=>{
                 // Make call to api for purchase.
                 props.onHide();
-                }}>Checkout</Button>
+                }}>Ok</Button>
           </Modal.Footer>
         </Modal>
       );
 }
 
-export default Cart;
+export default BuyersRequest;
