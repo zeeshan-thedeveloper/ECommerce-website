@@ -10,7 +10,7 @@ const jwtTokenGenerator=(value)=>{
         email:value.email
     }
     let jwtSecretKey = process.env.SECRET_KEY;
-    return jwt.sign(data, jwtSecretKey,{expiresIn: "1h"}); 
+    return jwt.sign(data, jwtSecretKey,{expiresIn: "120s"}); 
 }
 
 const signUp=(req,res) => {

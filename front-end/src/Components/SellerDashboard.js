@@ -13,7 +13,9 @@ import UpdateProducts from "./UpdateProduct";
 import RemoveProducts from "./RemoveProducts";
 import BuyersRequests from "./BuyersRequests";
 import BuyersRequest from "./BuyersRequest";
+import { useNavigate } from "react-router-dom";
 const SellerDashboard = () => {
+  let navigate = useNavigate();
   const [modalShow, setModalShow] =useState(false);
   const [currentOpenScreen,setCurrentOpenScreen]=useState(<ViewAllProducts/>);
   const [loggedInUser,setLoggedInUser]=useState(null);
@@ -51,12 +53,28 @@ const SellerDashboard = () => {
     
   ])
 
+  const verifyTokenExpiration = (token) => {
+    try {
+      const dataPartOfToken = JSON.parse(atob(token.split(".")[1]));
+      var intervalId = setInterval(() =>{
+        if (dataPartOfToken.exp * 1000 < Date.now()) {
+          // token is expired
+          navigate("/");
+          clearInterval(intervalId);
+        }
+      },10000)
+    } catch (e) {
+      return null;
+    }
+  };
+
   useEffect(()=>{
     const loggedInUser = localStorage.getItem("loggedInUser");
     if(loggedInUser){
       const user = JSON.parse(loggedInUser);
       console.log("User",user);
       setLoggedInUser(user);
+      verifyTokenExpiration(user.jwtToken)
     }
   },[])
 

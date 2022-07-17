@@ -1,4 +1,6 @@
 const addProduct=(req,res)=>{
+  
+  
     res.status(200).send({
         response:"Adding products"
     })
