@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/esm/Form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ViewAllProducts from "./ViewAllProducts";
 import AddProduct from "./AddProdcut";
 import UpdateProducts from "./UpdateProduct";
@@ -16,6 +16,7 @@ import BuyersRequest from "./BuyersRequest";
 const SellerDashboard = () => {
   const [modalShow, setModalShow] =useState(false);
   const [currentOpenScreen,setCurrentOpenScreen]=useState(<ViewAllProducts/>);
+  const [loggedInUser,setLoggedInUser]=useState(null);
   const [listOfBuyersRequest,setListOfBuyersRequest]=useState([
     {
       buyerName:"Zeeshan",
@@ -49,22 +50,32 @@ const SellerDashboard = () => {
     },
     
   ])
+
+  useEffect(()=>{
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    if(loggedInUser){
+      const user = JSON.parse(loggedInUser);
+      console.log("User",user);
+      setLoggedInUser(user);
+    }
+  },[])
+
   const handleScreenChange=(index)=>{
     switch(index){
         case 0:
-            setCurrentOpenScreen(<ViewAllProducts/>)
+            setCurrentOpenScreen(<ViewAllProducts loggedInUser={loggedInUser}/>)
         break;
         case 1:
-            setCurrentOpenScreen(<AddProduct/>)
+            setCurrentOpenScreen(<AddProduct loggedInUser={loggedInUser}/>)
         break;
         case 2:
-            setCurrentOpenScreen(<UpdateProducts/>)
+            setCurrentOpenScreen(<UpdateProducts loggedInUser={loggedInUser}/>)
         break;
         case 3:
-            setCurrentOpenScreen(<RemoveProducts/>)
+            setCurrentOpenScreen(<RemoveProducts loggedInUser={loggedInUser}/>)
         break;
         case 4:
-            setCurrentOpenScreen(<BuyersRequests/>)
+            setCurrentOpenScreen(<BuyersRequests loggedInUser={loggedInUser}/>)
         break;
         
         
@@ -77,7 +88,7 @@ const SellerDashboard = () => {
         <div
           style={{ fontSize: "2rem", marginTop: "1rem", fontWeight: "bold" }}
         >
-          Welcome Zeeshan
+          Welcome {(loggedInUser!=null) ? loggedInUser.firstName : ''}
         </div>
         <div>
           <Row>

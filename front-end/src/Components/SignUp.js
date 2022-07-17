@@ -24,6 +24,7 @@ const SignUp = () => {
 
   const formik = useFormik({
     initialValues: {
+      firstName: "",
       email: "",
       password: "",
       mobileNumber: "",
@@ -92,6 +93,17 @@ const SignUp = () => {
         <Card.Body>
           <Container className="text-left">
             <form onSubmit={formik.handleSubmit}>
+              <div>
+              <label >Name</label>
+              <input
+                style={{marginLeft:"3rem"}}
+                id="firstName"
+                name="firstName"
+                type="firstName"
+                onChange={formik.handleChange}
+                value={formik.values.firstName}
+              />
+              </div>
               <div>
               <label >Email Address</label>
               <input
