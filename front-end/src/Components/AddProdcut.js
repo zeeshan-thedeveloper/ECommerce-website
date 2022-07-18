@@ -1,6 +1,7 @@
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/esm/Form";
 import { useFormik } from "formik";
+import { OPERATION_NOT_SUCCESSFUL, OPERATION_SUCCESSFUL } from "./responses";
 const AddProduct = (props) => {
   const formik = useFormik({
     initialValues: {
@@ -10,6 +11,7 @@ const AddProduct = (props) => {
       itemDescription: "",
       itemImage: "",
       itemSellerName: (props.loggedInUser!=null) ? props.loggedInUser.firstName : 'Default Name',
+      itemSellerId: (props.loggedInUser!=null) ? props.loggedInUser._id : 'Default Id'
     },
     onSubmit: (values) => {
       const data = values;
@@ -24,24 +26,22 @@ const AddProduct = (props) => {
         },
       })
         .then((response) => {
+          console.log("Response status :",response.status)
           return response.json();
         })
         .then((data) => {
-          console.log("Response of adding data: ", data);
-          // if(data.responseCode==SELLER_ACCOUNT_CREATED){
-          //   // Store data in local storage
-          //   localStorage.setItem("loggedInUser",JSON.stringify(data.responsePayload))
-          //   localStorage.setItem("isLoggedIn","true");
-          //   navigate("/sellerDashboard");
-          // }
-          // else if(data.responseCode==CUSTOMER_ACCOUNT_CREATED){
-          //   // store data in local storage
-          //   localStorage.setItem("loggedInUser",JSON.stringify(data.responsePayload))
-          //   localStorage.setItem("isLoggedIn","true");
-          //   navigate("/productsLists")
-          // }
-          // else{
-          // }
+          console.log("Data",data)
+          if(data.responseCode==OPERATION_SUCCESSFUL){
+            
+            alert(data.responseMessage);
+          }
+          else if(data.responseCode==OPERATION_NOT_SUCCESSFUL){
+          
+            const errors = Object.keys(data.responsePayload.errors).map((item)=>{
+              return data.responsePayload.errors[item].message
+             })
+            alert(errors[0]);
+          }
         });
     },
   });

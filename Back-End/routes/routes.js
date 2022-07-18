@@ -8,8 +8,8 @@ routes.post("/signUp",authController.signUp);
 routes.post("/signIn",authController.signIn);
 
 routes.post("/addProduct",authMiddleware.verifyJwtToken,sellerController.addProduct);
-routes.post("/removeProduct",sellerController.removeProduct);
-routes.post("/updateProduct",sellerController.updateProduct);
-routes.post("/getAllProducts",sellerController.getAllProducts);
+routes.post("/removeProduct",authMiddleware.verifyJwtToken,sellerController.removeProduct);
+routes.post("/updateProduct",authMiddleware.verifyJwtToken,sellerController.updateProduct);
+routes.post("/getAllProducts",authMiddleware.verifyJwtToken,sellerController.getAllProducts);
 
 module.exports = routes;

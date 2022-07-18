@@ -24,6 +24,10 @@ const Schema = new mongoose.Schema({
     type:String,
     required:true
   },
+  itemSellerId:{
+    type: mongoose.Schema.Types.ObjectId,
+    required:true
+  }
 });
 
 const ProductsListSchema = mongoose.model("Products", Schema);

@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row"
 import Card from "react-bootstrap/esm/Card"
 import Button from "react-bootstrap/esm/Button";
-const ViewAllProducts = ()=>{
+const ViewAllProducts = (props)=>{
 
 
     const [listOfItems,setListofItem]=useState([
@@ -15,43 +15,36 @@ const ViewAllProducts = ()=>{
             itemImage:"https://static-01.daraz.pk/p/8a08d1c0066fc95c31fdf8069ca7b7dd.jpg",
             itemSellerName:"Zeeshan"
         },
-        {
-            itemName:"IPhone 12 Pro-Max",
-            itemId:"tjfmfnmnjdm",
-            itemPrice:"500$",
-            itemDescription:"Bla bla vla vo vo vo vo vo vo vo vo",
-            itemImage:"https://static-01.daraz.pk/p/8a08d1c0066fc95c31fdf8069ca7b7dd.jpg",
-            itemSellerName:"Tuba"
-        },
-        {
-            itemName:"IPhone 13 Pro-Max",
-            itemId:"tjfmf98unjdm",
-            itemPrice:"500$",
-            itemDescription:"Bla bla vla vo vo vo vo vo vo vo vo",
-            itemImage:"https://static-01.daraz.pk/p/8a08d1c0066fc95c31fdf8069ca7b7dd.jpg",
-            itemSellerName:"Nigeeta"
-        },
-        {
-            itemName:"IPhone 14 Pro-Max",
-            itemId:"tjfhygmfnjdm",
-            itemPrice:"500$",
-            itemDescription:"Bla bla vla vo vo vo vo vo vo vo vo",
-            itemImage:"https://static-01.daraz.pk/p/8a08d1c0066fc95c31fdf8069ca7b7dd.jpg",
-            itemSellerName:"Nadir"
-        },
-        {
-            itemName:"IPhone 15 Pro-Max",
-            itemId:"tjf78uhmfnjdm",
-            itemPrice:"500$",
-            itemDescription:"Bla bla vla vo vo vo vo vo vo vo vo",
-            itemImage:"https://static-01.daraz.pk/p/8a08d1c0066fc95c31fdf8069ca7b7dd.jpg",
-            itemSellerName:"Muskan"
-        },
-        
-    
       ]);
-    
-  
+      
+    useEffect(() => {
+        if(props.loggedInUser!=undefined){
+
+        
+        const data={
+            itemSellerId:(props.loggedInUser!=undefined) ? props.loggedInUser._id : 'Default id'
+        }
+        console.log(data)
+        fetch("http://localhost:8000/db-api/getAllProducts", {
+            method: "POST",
+            body: JSON.stringify(data),
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+              "Authorization": `Bearer ${props.loggedInUser.jwtToken}`
+            },
+          })
+            .then((response) => {
+              console.log("Response status :",response.status)
+              return response.json();
+            })
+            .then((data) => {
+                console.log("Data",data)
+            })
+        }else{
+            // Peform.
+        }
+    },[props.loggedInUser])
 
     return <div>
         <Row>
