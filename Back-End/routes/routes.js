@@ -6,6 +6,7 @@ const routes=express()
 
 routes.post("/signUp",authController.signUp);
 routes.post("/signIn",authController.signIn);
+routes.get("/getTemporaryJwtToken",authController.getTemporaryJwtToken);
 
 routes.post("/addProduct",authMiddleware.verifyJwtToken,sellerController.addProduct);
 routes.post("/removeProduct",authMiddleware.verifyJwtToken,sellerController.removeProduct);

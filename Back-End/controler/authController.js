@@ -11,6 +11,7 @@ const {
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
+const uuid = require("uuid");
 const saltRounds = 10;
 
 const jwtTokenGenerator = (value) => {
@@ -174,7 +175,14 @@ const signIn =async (req, res) => {
   }
 };
 
+const getTemporaryJwtToken=(req,res)=>{
+  const itemId = uuid.v1();
+  const token =  jwtTokenGenerator(itemId);
+  res.send({response:token})
+}
+
 module.exports = {
   signUp,
   signIn,
+  getTemporaryJwtToken
 };

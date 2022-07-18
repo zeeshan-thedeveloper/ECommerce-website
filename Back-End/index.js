@@ -22,6 +22,4 @@ app.use(cors());
 app.use("/db-api",routes);
 //Replace with your.
 
-app.listen(port, () => {
-    console.log(`Listening to requests on http://localhost:${port}`);
-});
+module.exports=app
